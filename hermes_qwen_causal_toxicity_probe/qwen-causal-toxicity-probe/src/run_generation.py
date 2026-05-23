@@ -64,14 +64,25 @@ def main() -> None:
         default="",
         help="Optional run label for file naming and traceability.",
     )
+    parser.add_argument(
+        "--max_examples",
+        type=int,
+        default=None,
+        help="Optional cap for laptop-friendly smoke runs.",
+    )
     args = parser.parse_args()
 
     cfg = load_config(Path(args.config))
+    seed = int(cfg.get("seed", 7))
+    torch.manual_seed(seed)
     tokenizer, model = load_model_and_tokenizer(cfg["model_name"])
 
     all_examples = []
     for ds in cfg["datasets"]:
         all_examples.extend(read_jsonl(Path(ds)))
+
+    if args.max_examples is not None:
+        all_examples = all_examples[: int(args.max_examples)]
 
     max_new_tokens = int(cfg.get("max_new_tokens", 256))
     do_sample = bool(cfg.get("do_sample", False))
@@ -139,6 +150,7 @@ def main() -> None:
         "datasets": cfg.get("datasets"),
         "prompt_types": cfg.get("prompt_types"),
         "num_examples": len(all_examples),
+        "max_examples_arg": args.max_examples,
         "num_records": len(records),
     }
     manifest_path = metadata_dir / f"run_manifest_{run_prefix}.json"

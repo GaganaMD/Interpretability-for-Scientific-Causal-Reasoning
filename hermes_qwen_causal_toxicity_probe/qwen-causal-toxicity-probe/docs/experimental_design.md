@@ -1,12 +1,37 @@
 # Experimental design
 
-This project uses synthetic causal-toxicity vignettes for controlled methodological experiments.
+## Research objective
+Assess whether Qwen2.5 outputs and latent representations are stable under prompt reframing and terminology perturbations, while remaining sensitive to causally relevant structure edits.
 
-- Benchmark categories: clean mediation, confounding, selection bias, mechanistic distractor.
-- Structure: each vignette encodes exposure, initiating event, mediator, outcome, and possible bias variable.
-- Prompt types: direct, mechanistic, confounding-aware, adversarial framing, minimal, and counterfactual.
-- Invariance test: renamed biomedical terms into neutral variable names.
-- Sensitivity test: ablated graph-relevant information (confounder/mediator/randomization/selection changes).
-- Why accuracy is insufficient: prompt-dependent flips and representation shifts can occur despite similar aggregate accuracy.
+## Benchmark categories
+1. clean_mediation
+2. confounding
+3. selection_bias
+4. mechanistic_distractor
 
-Interpretation should remain cautious: these are synthetic signals useful for stress-testing behavioral and representational consistency.
+## Synthetic vignette schema
+Each item includes structured causal fields (exposure, initiating event, mediator, outcome, bias variable, study design), natural-language vignette text, question, and synthetic labels.
+
+## Perturbation families
+- Graph-relevant edits: confounder removal, mediator removal, randomized design, selection bias addition.
+- Surface-form edits: renamed terms (biomedical tokens to neutral variables).
+- Prompt reframing: direct, mechanistic, confounding-aware, adversarial, minimal, counterfactual.
+
+## Behavioral metrics
+- Prompt-conditioned answer accuracy (synthetic labels)
+- Unclear answer rate
+- Rough concept mention recall
+- Prompt stability score / answer flips across prompts
+
+## Representation metrics
+- Layerwise cosine distance between original vs perturbed variants (same prompt)
+- Prompt-pair latent drift per example (same item, different prompt)
+- Optional mean-pooled representation contrasts alongside final-token contrasts
+
+## Why simple accuracy is insufficient
+A model can be accurate on average while:
+- being highly unstable across prompt wording,
+- shifting strongly under terminology changes,
+- relying on superficial cues not aligned with intended causal structure.
+
+This scaffold therefore combines behavior and latent-space contrasts.

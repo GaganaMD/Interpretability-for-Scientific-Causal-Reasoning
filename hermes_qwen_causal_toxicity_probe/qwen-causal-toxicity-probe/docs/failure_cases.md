@@ -1,24 +1,43 @@
 # Failure case logging template
 
+Use this template for notable behavioral or latent-space anomalies.
+
 ## Case ID
-- Example ID:
-- Pair ID:
-- Prompt type:
-- Variant type:
+- `fc_YYYYMMDD_<short_name>`
 
-## Observed output
-- Parsed answer:
-- Raw output excerpt:
+## Run metadata
+- run_name:
+- model_name:
+- config_snapshot:
+- generation_file:
+- activation_file:
 
-## Why this is interesting
-- Possible confounder neglect?
-- Prompt framing fragility?
-- Mechanistic distractor susceptibility?
+## Scenario
+- task_type:
+- variant_type:
+- prompt_type(s):
+- example_id / pair_id:
 
-## Follow-up checks
-- Compare across prompt variants
-- Compare original vs ablated/renamed activation contrasts
-- Add targeted synthetic examples
+## Observed behavior
+- parsed answers by prompt:
+- expected synthetic label:
+- key output snippets:
 
-## Caution
-This template records candidate failure modes for iterative analysis. It does not by itself establish mechanism-level conclusions.
+## Representation observations
+- layers with largest drift:
+- drift metric used:
+- contrast type (prompt-pair / original-vs-variant):
+
+## Hypotheses (tentative)
+- possible superficial cues:
+- possible prompt-framing sensitivity:
+- alternative explanations:
+
+## Follow-up experiment plan
+- targeted config changes:
+- additional controls:
+- what would falsify current interpretation:
+
+## Confidence statement
+- confidence level:
+- major uncertainties:

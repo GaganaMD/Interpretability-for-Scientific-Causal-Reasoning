@@ -1,97 +1,108 @@
 # Qwen2.5 Causal Toxicity Reasoning Probe
 
 ## Goal
-Build an implementation-first, laptop-friendly research scaffold to study whether Qwen2.5 behavior on synthetic toxicity vignettes is stable under prompt changes and causal-structure perturbations.
+Build a runnable, modular, laptop-first interpretability prototype for studying prompt-conditioned behavior and representation shifts in Qwen2.5 models on synthetic causal-toxicity reasoning tasks.
 
-## Motivation
-Causal-sounding outputs can arise from surface cues, framing effects, or biologically flavored distractors. This repo provides controlled synthetic tasks and lightweight analyses to inspect that risk.
+## Scientific scope and caution
+- All vignettes are synthetic methodological artifacts, not biomedical facts.
+- Behavioral scores, probe metrics, and activation similarities are exploratory correlational signals.
+- Probe separability does not prove the model uses a concept causally during generation.
+- Representation similarity or drift does not prove mechanistic causal abstraction.
 
-## Why Qwen2.5?
-- Open checkpoints and local inference.
-- Hidden states are inspectable.
-- Prompt contrast and activation analyses are reproducible.
-- These workflows are often not possible in closed API-only settings.
+## Why Qwen2.5 for this scaffold
+- Open checkpoints and local execution.
+- Direct access to hidden states and logits through HuggingFace Transformers + PyTorch.
+- Repeatable prompt/variant contrast workflows that are difficult in closed API-only settings.
+
+## Repository structure
+- `src/generate_dataset.py`: synthetic vignette generation (original + ablated + renamed variants)
+- `src/validate_dataset.py`: schema/field checks and distribution summaries
+- `src/run_generation.py`: local chat-template inference across prompt types
+- `src/score_outputs.py`: yes/no parsing + rough concept mention scoring
+- `src/analyze_prompt_sensitivity.py`: prompt answer stability and flip analysis
+- `src/collect_hidden_states.py`: selective hidden-state collection without generation
+- `src/train_probe.py`: layerwise linear probes (logistic regression)
+- `src/analyze_activation_contrasts.py`: original-vs-variant layerwise cosine distances
+- `src/analyze_representation_stability.py`: prompt-pair latent drift analysis
+- `src/generate_experiment_report.py`: run manifest + YAML-snapshot experiment tracking report
 
 ## Dataset design
-Synthetic vignettes (not medical claims) with task types:
-- clean_mediation
-- confounding
-- selection_bias
-- mechanistic_distractor
+Task families:
+- `clean_mediation`
+- `confounding`
+- `selection_bias`
+- `mechanistic_distractor`
 
-Each example contains structured fields (exposure, initiating event, mediator, outcome, bias variable, study design), a causal question, and synthetic gold labels.
+Variant families:
+- Causally relevant perturbations: `confounder_removed`, `mediator_removed`, `randomized_design`, `selection_bias_added`
+- Terminology perturbation: `renamed_terms` (biomedical terms -> neutral variables)
 
-Variants:
-- Ablations: confounder_removed, mediator_removed, randomized_design, selection_bias_added
-- Renaming: biomedical terms mapped to neutral variables
+This setup supports testing invariance under wording changes vs sensitivity under causal graph changes.
 
 ## Prompt contrast experiments
-Prompt families: direct, mechanistic, confounding-aware, adversarial, minimal, counterfactual.
-Run all prompt types on all examples and measure answer stability + concept mention recall.
+Prompt types:
+- `direct`
+- `mechanistic`
+- `confounding_aware`
+- `adversarial`
+- `minimal`
+- `counterfactual`
 
-## Faithfulness and causal ablation tests
-Original vs ablated/renamed variants allow behavior and activation comparisons under graph-relevant and wording-only changes.
+## Hidden-state and representation analysis
+`collect_hidden_states.py` supports:
+- one or multiple prompt types
+- optional `max_examples` bounding for laptop runs
+- per-layer final-token vectors
+- optional per-layer mean-pooled vectors
 
-## Hidden-state extraction
-Forward-pass-only activation collection (no generation) saves per-layer final-token and mean-pooled representations.
+Analyses:
+- `analyze_activation_contrasts.py`: compares original vs variant representations by `pair_id`
+- `analyze_representation_stability.py`: compares baseline prompt representations vs alternate prompts for the same example (`prompt latent drift`)
 
-## Representation probing
-Layerwise logistic probes test linear recoverability for:
-- confounding present
-- mediation present
-- selection_bias present
+## Experiment tracking (YAML differentiation)
+Recommended workflow:
+1. Create one YAML per experiment in `configs/experiments/`
+2. Run with label:
+   `python src/run_generation.py --config configs/experiments/exp_001.yaml --run_name exp_001`
 
-Important caution: probe performance indicates recoverability, not proof that the model causally uses that information.
+Saved per run:
+- `results/generations/generations_<timestamp>_<run_name>.jsonl`
+- `results/metadata/config_<timestamp>_<run_name>.yaml`
+- `results/metadata/run_manifest_<timestamp>_<run_name>.json`
 
-## How to run
-1) Install dependencies
+Consolidated report:
+- `python src/generate_experiment_report.py`
+- output: `reports/experiment_trace_report.md`
+
+## Quick start
+1) Environment
 - `python -m venv .venv`
 - `source .venv/Scripts/activate` (Git-Bash on Windows)
 - `pip install -r requirements.txt`
 
-2) Generate + validate datasets
+2) Data sanity
 - `python src/generate_dataset.py`
 - `python src/validate_dataset.py`
 
-3) Full small pilot (requires model download)
+3) Behavioral pipeline (model required)
 - `bash scripts/run_small_pilot.sh`
 
-4) Hidden-state demo (requires model download)
+4) Hidden-state pipeline (model required)
 - `bash scripts/run_hidden_state_demo.sh`
 
-## Experiment tracking and YAML differentiation
-Use one YAML per experiment and run with a run label:
-- `python src/run_generation.py --config configs/experiments/exp_001.yaml --run_name exp_001`
-
-For each run, the pipeline now saves:
-- `results/generations/generations_<timestamp>_<run_name>.jsonl`
-- `results/metadata/config_<timestamp>_<run_name>.yaml` (exact snapshot used)
-- `results/metadata/run_manifest_<timestamp>_<run_name>.json`
-
-Generate the consolidated report:
-- `python src/generate_experiment_report.py`
-
-Report output:
-- `reports/experiment_trace_report.md`
-
 ## Expected outputs
-- `results/generations/generations_<timestamp>.jsonl`
+- `results/generations/*.jsonl`
 - `results/scores/scored_generations.csv`
 - `results/scores/summary_by_task_and_prompt.csv`
 - `results/scores/prompt_stability.csv`
 - `results/activations/qwen2p5_hidden_states.pt`
 - `results/scores/probe_by_layer.csv`
 - `results/scores/activation_contrasts.csv`
+- `results/scores/prompt_latent_drift.csv`
+- `results/scores/prompt_latent_drift_summary.csv`
 
-## Limitations
-- Synthetic benchmark only.
-- Keyword scoring is rough.
-- Probe interpretation is limited.
-- No medical claims.
-- No proof of internal causal mechanisms.
-
-## Application relevance
-Useful as an early-stage interpretability workflow for iterative experimentation on limited local compute.
-
-## Scientific caution statement
-This project does not claim to prove mechanistic interpretability. It is an experimental scaffold for behavioral and representation-level analysis.
+## Laptop-first assumptions and limits
+- Default model: `Qwen/Qwen2.5-0.5B-Instruct`
+- CPU is supported, but hidden-state collection can still be slow.
+- Larger checkpoints (1.5B/7B) require materially more RAM/VRAM.
+- First run requires model download from HuggingFace.
