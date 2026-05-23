@@ -1,0 +1,48 @@
+model_name: Qwen/Qwen2.5-0.5B-Instruct
+max_new_tokens: 128
+do_sample: false
+seed: 7
+datasets:
+- data/generated/toxicity_vignettes.jsonl
+- data/generated/ablated_vignettes.jsonl
+- data/generated/renamed_vignettes.jsonl
+prompt_types:
+- direct
+- mechanistic
+- confounding_aware
+- adversarial
+- minimal
+- counterfactual
+output_dir: results
+hidden_states:
+  prompt_types:
+  - direct
+  - mechanistic
+  - confounding_aware
+  - adversarial
+  pooling_strategies:
+  - final_token
+  - mean_pool
+  - last4_mean
+  layer_selection: 0:25:2
+  max_examples: 24
+  include_variant_types:
+  - original
+  - renamed_terms
+  - confounder_removed
+  - mediator_removed
+  - randomized_design
+  - selection_bias_added
+representation_analysis:
+  baseline_prompt_type: direct
+  compare_prompt_types:
+  - mechanistic
+  - confounding_aware
+  - adversarial
+  include_variant_types:
+  - original
+  - renamed_terms
+  - confounder_removed
+  - mediator_removed
+  - randomized_design
+  - selection_bias_added

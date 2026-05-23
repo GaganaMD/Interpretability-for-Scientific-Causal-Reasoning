@@ -216,3 +216,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# tensors and activations
+*.pt
+results/activations/
+__pycache__/
+*.pyc

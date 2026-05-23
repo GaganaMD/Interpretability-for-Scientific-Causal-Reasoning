@@ -1,0 +1,32 @@
+{
+  "run_prefix": "20260524_010028_20260524_010001_latent_real_small",
+  "timestamp": "20260524_010028",
+  "run_name": "20260524_010001_latent_real_small",
+  "command": "python src/collect_hidden_states.py",
+  "config_source_path": "config.yaml",
+  "config_snapshot_path": "results\\metadata\\config_hidden_states_20260524_010028_20260524_010001_latent_real_small.yaml",
+  "activations_path": "C:\\Users\\gagan\\Desktop\\dev-projects\\Interpretability for Scientific Causal Reasoning\\hermes_qwen_causal_toxicity_probe\\qwen-causal-toxicity-probe\\results\\activations\\qwen2p5_hidden_states_20260524_010001_latent_real_small.pt",
+  "model_name": "Qwen/Qwen2.5-0.5B-Instruct",
+  "prompt_types": [
+    "direct",
+    "mechanistic",
+    "confounding_aware",
+    "adversarial"
+  ],
+  "pooling_strategies": [
+    "final_token",
+    "mean_pool"
+  ],
+  "selected_layers": [
+    0,
+    4,
+    8,
+    12,
+    16,
+    20,
+    24
+  ],
+  "num_examples": 4,
+  "max_examples_arg": 4,
+  "num_records": 16
+}

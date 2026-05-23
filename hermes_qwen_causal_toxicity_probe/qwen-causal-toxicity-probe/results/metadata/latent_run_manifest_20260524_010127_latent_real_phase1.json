@@ -1,0 +1,20 @@
+{
+  "run_prefix": "20260524_010127_latent_real_phase1",
+  "timestamp": "20260524_010127",
+  "run_name": "latent_real_phase1",
+  "config_source": "config.yaml",
+  "config_snapshot": "C:\\Users\\gagan\\Desktop\\dev-projects\\Interpretability for Scientific Causal Reasoning\\hermes_qwen_causal_toxicity_probe\\qwen-causal-toxicity-probe\\results\\metadata\\config_latent_20260524_010127_latent_real_phase1.yaml",
+  "activations": "C:\\Users\\gagan\\Desktop\\dev-projects\\Interpretability for Scientific Causal Reasoning\\hermes_qwen_causal_toxicity_probe\\qwen-causal-toxicity-probe\\results\\activations\\qwen2p5_hidden_states_20260524_010127_latent_real_phase1.pt",
+  "drift_csv": "C:\\Users\\gagan\\Desktop\\dev-projects\\Interpretability for Scientific Causal Reasoning\\hermes_qwen_causal_toxicity_probe\\qwen-causal-toxicity-probe\\results\\scores\\prompt_latent_drift_20260524_010127_latent_real_phase1.csv",
+  "drift_summary_csv": "C:\\Users\\gagan\\Desktop\\dev-projects\\Interpretability for Scientific Causal Reasoning\\hermes_qwen_causal_toxicity_probe\\qwen-causal-toxicity-probe\\results\\scores\\prompt_latent_drift_summary_20260524_010127_latent_real_phase1.csv",
+  "consistency_csv": "C:\\Users\\gagan\\Desktop\\dev-projects\\Interpretability for Scientific Causal Reasoning\\hermes_qwen_causal_toxicity_probe\\qwen-causal-toxicity-probe\\results\\scores\\prompt_within_example_consistency_20260524_010127_latent_real_phase1.csv",
+  "activation_contrasts_csv": "C:\\Users\\gagan\\Desktop\\dev-projects\\Interpretability for Scientific Causal Reasoning\\hermes_qwen_causal_toxicity_probe\\qwen-causal-toxicity-probe\\results\\scores\\activation_contrasts_20260524_010127_latent_real_phase1.csv",
+  "activation_contrasts_summary_csv": "C:\\Users\\gagan\\Desktop\\dev-projects\\Interpretability for Scientific Causal Reasoning\\hermes_qwen_causal_toxicity_probe\\qwen-causal-toxicity-probe\\results\\scores\\activation_contrasts_summary_20260524_010127_latent_real_phase1.csv",
+  "report_md": "C:\\Users\\gagan\\Desktop\\dev-projects\\Interpretability for Scientific Causal Reasoning\\hermes_qwen_causal_toxicity_probe\\qwen-causal-toxicity-probe\\reports\\latent_representation_report_20260524_010127_latent_real_phase1.md",
+  "max_examples": 52,
+  "layers": "0:25:4",
+  "pooling": [
+    "final_token",
+    "mean_pool"
+  ]
+}
