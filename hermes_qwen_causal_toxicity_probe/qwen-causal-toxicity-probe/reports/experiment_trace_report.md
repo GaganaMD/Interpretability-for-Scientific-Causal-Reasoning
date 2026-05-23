@@ -1,98 +1,17 @@
 # Experiment Trace Report
 
-Generated at: 2026-05-23 23:44:30
+Generated at: 2026-05-24 00:37:28
 
 ## Current config.yaml
 ```yaml
-# model_name: Qwen/Qwen2.5-0.5B-Instruct
-# max_new_tokens: 256
-# do_sample: false
-# datasets:
-#   - data/generated/toxicity_vignettes.jsonl
-#   - data/generated/ablated_vignettes.jsonl
-#   - data/generated/renamed_vignettes.jsonl
-# prompt_types:
-#   - direct
-#   - mechanistic
-#   - confounding_aware
-#   - adversarial
-#   - minimal
-#   - counterfactual
-# output_dir: results
-# batch_size: 1
-# hidden_states:
-#   prompt_type: mechanistic
-#   save_mean_pool: true
-#   max_examples: null
-
-#----------------------------------------------------
-
-# model_name: Qwen/Qwen2.5-0.5B-Instruct
-# max_new_tokens: 64
-# do_sample: false
-# datasets:
-#   - data/generated/toxicity_vignettes.jsonl
-# prompt_types:
-#   - direct
-# output_dir: results
-
-# -----------------------------------------
-
-# model_name: Qwen/Qwen2.5-0.5B-Instruct
-# max_new_tokens: 96
-# do_sample: false
-# datasets:
-#   - data/generated/toxicity_vignettes.jsonl
-# prompt_types:
-#   - direct
-#   - mechanistic
-#   - confounding_aware
-#   - adversarial
-# output_dir: results
-
-# ----------------------------------------
-
-# model_name: Qwen/Qwen2.5-0.5B-Instruct
-# max_new_tokens: 96
-# do_sample: false
-
-# datasets:
-#   - data/generated/toxicity_vignettes.jsonl
-
-# prompt_types:
-#   - direct
-#   - mechanistic
-#   - confounding_aware
-#   - adversarial
-
-# output_dir: results
-
-
-# -------------------
-
-# model_name: Qwen/Qwen2.5-0.5B-Instruct
-# max_new_tokens: 96
-# do_sample: false
-
-# datasets:
-#   - data/generated/renamed_vignettes.jsonl
-
-# prompt_types:
-#   - direct
-#   - mechanistic
-#   - confounding_aware
-#   - adversarial
-
-# output_dir: results
-
-
-# ----------------------------
-
 model_name: Qwen/Qwen2.5-0.5B-Instruct
-max_new_tokens: 96
+max_new_tokens: 128
 do_sample: false
+seed: 7
 
 datasets:
+  - data/generated/toxicity_vignettes.jsonl
+  - data/generated/ablated_vignettes.jsonl
   - data/generated/renamed_vignettes.jsonl
 
 prompt_types:
@@ -100,8 +19,30 @@ prompt_types:
   - mechanistic
   - confounding_aware
   - adversarial
+  - minimal
+  - counterfactual
 
 output_dir: results
+
+hidden_states:
+  prompt_types:
+    - mechanistic
+    - confounding_aware
+  save_mean_pool: true
+  max_examples: 24
+
+representation_analysis:
+  baseline_prompt_type: mechanistic
+  compare_prompt_types:
+    - confounding_aware
+    - adversarial
+  include_variant_types:
+    - original
+    - renamed_terms
+    - confounder_removed
+    - mediator_removed
+    - randomized_design
+    - selection_bias_added
 ```
 
 ## Run-by-run trace
@@ -239,3 +180,35 @@ Variant-level summary:
 ## Traceability status
 - New runs now support exact per-run YAML snapshots and machine-readable manifests under results/metadata/.
 - Legacy runs (before this update) are still inferential unless their YAML was manually preserved elsewhere.
+
+## Scientific interpretation (auto-generated)
+
+### What this run suggests
+- This report treats outputs as exploratory interpretability signals, not proof of internal mechanism.
+- Latest run analyzed: generations_20260523_232437.jsonl (192 records; 48 unique examples).
+- Prompt-conditioned answer instability remains measurable (flip_rate=1.000).
+
+### Emerging hypotheses
+- Prompt-conditioned behavior hypothesis: performance dispersion across prompt framings remains large (best=adversarial:0.750, worst=mechanistic:0.250).
+- Mechanistic-framing hypothesis: explicit mechanistic prompting may destabilize small-model reasoning in this setup (mechanistic accuracy=0.250).
+- Heuristic-discrimination hypothesis: adversarial framing may induce stronger shortcut discrimination rather than deeper causal abstraction (adversarial accuracy=0.750).
+- Stability hypothesis: answer flips across prompt reframing remain non-trivial (flip_rate=1.000), consistent with prompt-contingent decision policy shifts.
+
+### What these results do NOT establish
+- Behavioral instability alone does not prove causal reasoning failure.
+- Probe separability (if later observed) would indicate recoverability, not necessity.
+- Hidden-state similarity or drift (if later measured) would not by itself prove mechanism equivalence.
+- Synthetic-toxicity benchmark performance should not be interpreted as biomedical knowledge quality.
+
+### Possible confounders and unresolved ambiguities
+- Prompt templates differ in instruction density and pragmatic framing; effects may mix reasoning changes with instruction-following changes.
+- Simple yes/no parsing may undercount nuanced or hedge-heavy outputs.
+- Small sample size improves control but increases variance; replication across seeds/checkpoints remains necessary.
+- Surface terminology effects may partially reflect tokenization/lexical familiarity rather than abstraction collapse.
+
+### Next mechanistic questions
+- Layerwise latent drift: which layers move most under prompt reframing for the same example?
+- Prompt-pair geometry: do adversarial and mechanistic prompts form separable latent clusters?
+- Causal-structure sensitivity: does latent drift increase more for true graph perturbations than term renaming?
+- Scaling trajectory: do instability and flip patterns persist across Qwen2.5 0.5B -> 1.5B -> 3B checkpoints?
+- Faithfulness frontier: when chain-of-thought style prompting changes text, does it align with more stable latent causal abstraction?

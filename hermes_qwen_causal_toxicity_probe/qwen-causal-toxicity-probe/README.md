@@ -101,6 +101,11 @@ Consolidated report:
 - `results/scores/prompt_latent_drift.csv`
 - `results/scores/prompt_latent_drift_summary.csv`
 
+## Research documentation (core artifacts)
+- `docs/research_evolution.md`: deep scientific narrative of project evolution and emerging hypotheses.
+- `docs/interpretability_reporting_standard.md`: required interpretation sections for future experiment artifacts.
+- `reports/experiment_trace_report.md`: run-level trace + auto-generated interpretability commentary.
+
 ## Laptop-first assumptions and limits
 - Default model: `Qwen/Qwen2.5-0.5B-Instruct`
 - CPU is supported, but hidden-state collection can still be slow.
