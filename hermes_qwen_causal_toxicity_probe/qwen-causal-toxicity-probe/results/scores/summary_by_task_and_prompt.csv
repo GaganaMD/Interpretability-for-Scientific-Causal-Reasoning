@@ -1,0 +1,17 @@
+task_type,prompt_type,n,accuracy,unclear_rate,concept_recall_rough
+clean_mediation,adversarial,12,0.0,0.0,0.5
+clean_mediation,confounding_aware,12,1.0,0.0,0.08333333333333333
+clean_mediation,direct,12,1.0,0.0,0.5
+clean_mediation,mechanistic,12,1.0,0.0,0.9166666666666666
+confounding,adversarial,12,1.0,0.0,0.2916666666666667
+confounding,confounding_aware,12,0.0,0.0,0.0
+confounding,direct,12,0.08333333333333333,0.0,0.375
+confounding,mechanistic,12,0.0,0.0,0.16666666666666666
+mechanistic_distractor,adversarial,12,1.0,0.0,0.08333333333333333
+mechanistic_distractor,confounding_aware,12,1.0,0.0,0.25
+mechanistic_distractor,direct,12,1.0,0.0,0.5
+mechanistic_distractor,mechanistic,12,0.0,0.0,0.4583333333333333
+selection_bias,adversarial,12,1.0,0.0,0.0
+selection_bias,confounding_aware,12,0.0,0.0,0.0
+selection_bias,direct,12,0.0,0.0,0.25
+selection_bias,mechanistic,12,0.0,0.0,0.2916666666666667

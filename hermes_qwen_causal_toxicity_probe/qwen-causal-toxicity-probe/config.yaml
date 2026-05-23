@@ -1,0 +1,98 @@
+# model_name: Qwen/Qwen2.5-0.5B-Instruct
+# max_new_tokens: 256
+# do_sample: false
+# datasets:
+#   - data/generated/toxicity_vignettes.jsonl
+#   - data/generated/ablated_vignettes.jsonl
+#   - data/generated/renamed_vignettes.jsonl
+# prompt_types:
+#   - direct
+#   - mechanistic
+#   - confounding_aware
+#   - adversarial
+#   - minimal
+#   - counterfactual
+# output_dir: results
+# batch_size: 1
+# hidden_states:
+#   prompt_type: mechanistic
+#   save_mean_pool: true
+#   max_examples: null
+
+#----------------------------------------------------
+
+# model_name: Qwen/Qwen2.5-0.5B-Instruct
+# max_new_tokens: 64
+# do_sample: false
+# datasets:
+#   - data/generated/toxicity_vignettes.jsonl
+# prompt_types:
+#   - direct
+# output_dir: results
+
+# -----------------------------------------
+
+# model_name: Qwen/Qwen2.5-0.5B-Instruct
+# max_new_tokens: 96
+# do_sample: false
+# datasets:
+#   - data/generated/toxicity_vignettes.jsonl
+# prompt_types:
+#   - direct
+#   - mechanistic
+#   - confounding_aware
+#   - adversarial
+# output_dir: results
+
+# ----------------------------------------
+
+# model_name: Qwen/Qwen2.5-0.5B-Instruct
+# max_new_tokens: 96
+# do_sample: false
+
+# datasets:
+#   - data/generated/toxicity_vignettes.jsonl
+
+# prompt_types:
+#   - direct
+#   - mechanistic
+#   - confounding_aware
+#   - adversarial
+
+# output_dir: results
+
+
+# -------------------
+
+# model_name: Qwen/Qwen2.5-0.5B-Instruct
+# max_new_tokens: 96
+# do_sample: false
+
+# datasets:
+#   - data/generated/renamed_vignettes.jsonl
+
+# prompt_types:
+#   - direct
+#   - mechanistic
+#   - confounding_aware
+#   - adversarial
+
+# output_dir: results
+
+
+# ----------------------------
+
+model_name: Qwen/Qwen2.5-0.5B-Instruct
+max_new_tokens: 96
+do_sample: false
+
+datasets:
+  - data/generated/renamed_vignettes.jsonl
+
+prompt_types:
+  - direct
+  - mechanistic
+  - confounding_aware
+  - adversarial
+
+output_dir: results

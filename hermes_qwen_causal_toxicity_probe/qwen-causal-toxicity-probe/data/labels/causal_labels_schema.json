@@ -1,0 +1,36 @@
+{
+  "required_fields": [
+    "id",
+    "task_type",
+    "domain",
+    "organ",
+    "exposure",
+    "molecular_initiating_event",
+    "mediator",
+    "outcome",
+    "bias_variable",
+    "study_design",
+    "vignette",
+    "question",
+    "gold_answer",
+    "gold_concepts",
+    "gold_explanation",
+    "pair_id",
+    "variant_type"
+  ],
+  "task_types": [
+    "clean_mediation",
+    "confounding",
+    "selection_bias",
+    "mechanistic_distractor"
+  ],
+  "variant_types": [
+    "original",
+    "confounder_removed",
+    "mediator_removed",
+    "randomized_design",
+    "selection_bias_added",
+    "renamed_terms"
+  ],
+  "notes": "Synthetic causal-structure labels for experimentation only. Not medical claims."
+}
