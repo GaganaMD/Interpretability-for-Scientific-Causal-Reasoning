@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite it as below."
+title: "Interpretability for Scientific Causal Reasoning: Qwen2.5 Causal Toxicity Reasoning Probe"
+type: software
+authors:
+  - given-names: Gagana
+    family-names: "M D"
+repository-code: "https://github.com/GaganaMD/Interpretability-for-Scientific-Causal-Reasoning"
+license: MIT
